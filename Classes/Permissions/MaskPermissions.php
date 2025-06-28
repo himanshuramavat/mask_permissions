@@ -64,7 +64,7 @@ class MaskPermissions
             $result = $this->getPermissions($group);
 
             // Update non_exclude_fields
-            $nonExcludeFields = $result['non_exclude_fields'];
+            $nonExcludeFields = $result['non_exclude_fields'] ?? '';
             $nonExcludeFields = GeneralUtility::trimExplode(',', $nonExcludeFields);
             $nonExcludeFields = array_merge(
                 $nonExcludeFields,
@@ -83,7 +83,7 @@ class MaskPermissions
                 ->executeStatement();
 
             // Update tables_modify
-            $tablesModify = $result['tables_modify'];
+            $tablesModify = $result['tables_modify'] ?? '';
             $tablesModify = GeneralUtility::trimExplode(',', $tablesModify);
             $tablesModify = array_merge($tablesModify, $this->getMaskCustomTables());
             $tablesModify = array_unique($tablesModify);
@@ -96,7 +96,7 @@ class MaskPermissions
                 ->executeStatement();
 
             // Update explicit_allowdeny
-            $explicitAllowDeny = $result['explicit_allowdeny'];
+            $explicitAllowDeny = $result['explicit_allowdeny'] ?? '';
             $explicitAllowDeny = GeneralUtility::trimExplode(',', $explicitAllowDeny);
             $explicitAllowDeny = array_merge($explicitAllowDeny, $this->getMaskExplicitAllow());
             $explicitAllowDeny = array_unique($explicitAllowDeny);
@@ -128,7 +128,7 @@ class MaskPermissions
         foreach ($groups as $uid) {
             $result = $this->getPermissions($uid);
 
-            $nonExcludeFields = $result['non_exclude_fields'];
+            $nonExcludeFields = $result['non_exclude_fields'] ?? '';
             $nonExcludeFields = GeneralUtility::trimExplode(',', $nonExcludeFields);
             $nonExcludeFields = array_filter(
                 $nonExcludeFields,
@@ -144,7 +144,7 @@ class MaskPermissions
             );
             $fieldsToUpdate = array_diff($fields, $nonExcludeFields);
 
-            $tablesModify = $result['tables_modify'];
+            $tablesModify = $result['tables_modify'] ?? '';
             $tablesModify = GeneralUtility::trimExplode(',', $tablesModify);
             $tablesModify = array_filter(
                 $tablesModify,
@@ -155,7 +155,7 @@ class MaskPermissions
 
             $tablesToUpdate = array_diff($this->getMaskCustomTables(), $tablesModify);
 
-            $explicitAllowDeny = $result['explicit_allowdeny'];
+            $explicitAllowDeny = $result['explicit_allowdeny'] ?? '';
             $explicitAllowDeny = GeneralUtility::trimExplode(',', $explicitAllowDeny);
             $explicitAllowDenyToUpdate = array_diff($this->getMaskExplicitAllow(), $explicitAllowDeny);
 
