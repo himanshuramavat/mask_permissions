@@ -17,13 +17,12 @@ declare(strict_types=1);
 
 namespace HOV\MaskPermissions\Controller;
 
-use HOV\MaskPermissions\Permissions\MaskPermissions;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
+use HOV\MaskPermissions\Permissions\MaskPermissions;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
-use TYPO3\CMS\Beuser\Domain\Repository\BackendUserGroupRepository;
-use TYPO3\CMS\Core\Http\HtmlResponse;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Beuser\Domain\Repository\BackendUserGroupRepository;
 
 class PermissionController extends ActionController
 {
@@ -72,9 +71,9 @@ class PermissionController extends ActionController
             $success = $this->permissionUpdater->update();
         }
         if ($success) {
-            $this->addFlashMessage('Update successful!');
+            $this->addFlashMessage('Update successful!', '', ContextualFeedbackSeverity::OK);
         } else {
-            $this->addFlashMessage('Update failed.', '', AbstractMessage::ERROR);
+            $this->addFlashMessage('Update failed.', '', ContextualFeedbackSeverity::ERROR);
         }
         return $this->redirect('index');
     }
